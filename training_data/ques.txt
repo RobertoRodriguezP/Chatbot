@@ -1,0 +1,8 @@
+¿Que comidas cocinan?
+Cocinamos Pizza y empanadas.
+¿Tienen servicio a domicilio?
+Si, tenemos servicio a domicilio.
+Adios
+<a href="http://www.google.com">Salir</a><br>
+comprar
+<button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#FacturaFinal"> Comprar </button>

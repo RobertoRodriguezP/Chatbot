@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>Pedidos Restaurante</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles/style.css') }}">
+  <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+
+<body>
+  <!-- partial:index.partial.html -->
+  <section class="msger">
+    <header class="msger-header">
+      <div class="msger-header-title">
+        <i class="fas fa-bug"></i> Pedidos Chatbot <i class="fas fa-bug"></i>
+      </div>
+    </header>
+
+    <main class="msger-chat">
+      <div class="msg left-msg">
+        <div class="msg-img" style="background-image: url(https://image.flaticon.com/icons/svg/3180/3180271.svg)"></div>
+
+        <div class="msg-bubble">
+          <div class="msg-info">
+            <div class="msg-info-name">EidenBot</div>
+            <div id="Time" class="msg-info-time">12:45</div>
+          </div>
+
+          <div class="msg-text">
+            Hola, Bienvenidos a EidenBot!
+          </div><br>
+          <div class="msg-text">
+            para pedir el menu presiona:
+          </div><br>
+          <div class="btn btn-primary" id="menu" >
+            ¿Me brinda el menu?
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <form class="msger-inputarea">
+      <input type="text" class="msger-input" id="textInput" placeholder="chateame...">
+      <button type="submit" class="msger-send-btn">Enviar</button>
+    </form>
+  </section>
+  <!-- partial -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src='https://use.fontawesome.com/releases/v5.0.13/js/all.js'></script>
+  <script>
+
+  x = $("#menu");
+  x.click(menu);
+  var id = 1;
+  var subtotal=0.00;
+
+    const msgerForm = get(".msger-inputarea");
+    const msgerInput = get(".msger-input");
+    const msgerChat = get(".msger-chat");
+
+
+    // Icons made by Freepik from www.flaticon.com
+    const BOT_IMG = "https://image.flaticon.com/icons/svg/3180/3180271.svg";
+    const PERSON_IMG = "https://image.flaticon.com/icons/svg/2912/2912288.svg";
+    const BOT_NAME = "Eiden";
+    const PERSON_NAME = "Yo";
+
+    msgerForm.addEventListener("submit", event => {
+      event.preventDefault();
+
+      const msgText = msgerInput.value;
+      if (!msgText) return;
+
+      appendMessage(PERSON_NAME, PERSON_IMG, "right", msgText);
+      msgerInput.value = "";
+      botResponse(msgText);
+    });
+
+    function appendMessage(name, img, side, text) {
+      //   Simple solution for small apps
+      const msgHTML = `
+<div class="msg ${side}-msg">
+  <div class="msg-img" style="background-image: url(${img})"></div>
+
+  <div class="msg-bubble">
+    <div class="msg-info">
+      <div class="msg-info-name">${name}</div>
+      <div class="msg-info-time">${formatDate(new Date())}</div>
+    </div>
+
+    <div class="msg-text">${text}</div>
+  </div>
+</div>
+`;
+
+      msgerChat.insertAdjacentHTML("beforeend", msgHTML);
+      msgerChat.scrollTop += 500
+    }
+
+    function botResponse(rawText) {
+
+      // Bot Response
+      $.get("/get", { msg: rawText }).done(function (data) {
+        console.log(rawText);
+        console.log(data);
+        const msgText = data;
+        appendMessage(BOT_NAME, BOT_IMG, "left", msgText);
+
+      });
+
+    }
+
+
+    // Utils
+    function get(selector, root = document) {
+      return root.querySelector(selector);
+    }
+
+    function formatDate(date) {
+      const h = "0" + date.getHours();
+      const m = "0" + date.getMinutes();
+
+      return `${h.slice(-2)}:${m.slice(-2)}`;
+    }
+function bill(x){
+  if(x=='1')
+  {
+    alert("Ingresado");
+    $('#Factura').append('<tr><td>'+id+'</td><td>Empanada</td><td>1.00</td></tr>');
+    id=id+1;
+    subtotal=subtotal+1.00;
+  }
+  else if(x=='2')
+  {
+    alert("Ingresado");
+    $('#Factura').append('<tr><td>'+id+'</td><td>Pizza 12</td><td>9.00</td></tr>');
+    id=id+1;
+    subtotal=subtotal+9.00;
+  }
+  else if(x=='3')
+  {
+    alert("Ingresado");
+    $('#Factura').append('<tr><td>'+id+'</td><td>Soda</td><td>1.00</td></tr>');
+    id=id+1;
+    subtotal=subtotal+1.00;
+  }
+  else if(x=='4')
+  {
+    alert("Ingresado");
+    $('#Factura').append('<tr><td>'+id+'</td><td>Macarrones</td><td>1.50</td></tr>');
+    id=id+1;
+    subtotal=subtotal+1.50;
+  }
+  else if(x=='5')
+  {
+    alert("Ingresado");
+    $('#Factura').append('<tr><td>'+id+'</td><td>Lasagna</td><td>6.00</td></tr>');
+    id=id+1;
+    subtotal=subtotal+6.00;
+  }
+  else if(x=='6')
+  {
+    alert("Ingresado");
+    $('#Factura').append('<tr><td>'+id+'</td><td>Alitas de pollo 8</td><td>6.00</td></tr>');
+    id=id+1;
+    subtotal=subtotal+6.00;
+  }
+  else{
+    $('#Factura').append('<tr><td>'+id+'</td><td>No programado</td><td>0.00</td></tr>');
+  }
+   $("#SubTotal").html('<tr><td></td><td>SubTotal</td><td>'+subtotal+'</td></tr>');
+}
+
+function menu(){
+  let x = $("#textInput");
+  x.val("¿Me brinda el menu?");
+}
+
+function comprar(){
+  let x = $("#textInput");
+  x.val("comprar");
+}
+  </script>
+
+
+  <div class="container">
+    <!-- Modal -->
+    <div class="modal fade" id="myModal" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Factura</h4>
+          </div>
+
+          <div class="modal-body">
+
+            <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Producto</th>
+                            <th>Costo</th>
+                        </tr>
+                    </thead>
+                    <tbody id="Factura">
+                        <tr id="LoadingStatus" style="color:red"></tr>
+                    </tbody>
+                    <tbody id="SubTotal">
+                        <tr id="LoadingStatus" style="color:red"></tr>
+                    </tbody>
+                </table>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+  <div class="container">
+    <!-- Modal -->
+    <div class="modal fade" id="FacturaFinal" role="dialog">
+      <div class="modal-dialog">
+
+        <!-- Modal content-->
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal">&times;</button>
+            <h4 class="modal-title">Factura</h4>
+          </div>
+
+          <div class="modal-body">
+
+            <table class="table table-striped">
+                    <thead>
+                        <tr>
+                            <th>ID</th>
+                            <th>Producto</th>
+                            <th>Costo</th>
+                        </tr>
+                    </thead>
+                    <tbody id="Factura">
+                        <tr id="LoadingStatus" style="color:red"></tr>
+                    </tbody>
+                    <tbody id="SubTotal">
+                        <tr id="LoadingStatus" style="color:red"></tr>
+                    </tbody>
+                </table>
+          </div>
+
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Pagar</button>
+            <button type="button" class="btn btn-default" data-dismiss="modal">Cerrar</button>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+  </div>
+
+</body>
+
+</html>
